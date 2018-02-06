@@ -13,12 +13,14 @@ namespace MegaDesk_3_JoshuaNilsson
 {
     public partial class AddQuote : Form
     {
+        // initialized for use
         private string CustomerName = string.Empty;
-        // initialize width, depth, etc.
-        // create new form window when "Add" button within AddQuote is selected, which will display
-        // the output of width, depth, rushdays, materials, etc.
-        // look at screenshots
-        // Also, you need to include Materials within AddQuote. Again, look at screenshots for ideas
+        MaterialTypes MaterialTypes;
+        int DeskWidth = 0;
+        int DeskDepth = 0;
+        int DrawerCount = 0;
+        int OrderDays = 0;
+        int TotalCost = 0;
 
         public AddQuote()
         {
@@ -33,6 +35,11 @@ namespace MegaDesk_3_JoshuaNilsson
             AddQuoteDays.Items.Add("5");
             AddQuoteDays.Items.Add("7");
             AddQuoteDays.Items.Add("14");
+
+            List<MaterialTypes> MaterialTypesList = Enum.GetValues(typeof(MaterialTypes))
+                .Cast<MaterialTypes>().ToList();
+            AddQuoteMaterialType.DataSource = MaterialTypesList;
+
         }
 
         private void cancelAddQuoteButton_Click(object sender, EventArgs e)
@@ -44,23 +51,48 @@ namespace MegaDesk_3_JoshuaNilsson
 
         private void AddQuoteButton_Click(object sender, EventArgs e)
         {
-            CustomerName = addQuoteCustomerInput.Text;
-            // embed within try
-            // get width depth rush materials methods calculations and return integer, etc. (in DeskQuote.cs)
-            // int.parse
-            //DeskQuote DeskQuote = new DeskQuote(DeskWidth, DeskDepth, DeskNumDrawers, DeskMaterialType, DeskRushDays);
-            //TotalCost = DeskQuote.CalculateTotalCost();
-            DisplayQuote displayQuoteForm = new DisplayQuote();
-            displayQuoteForm.Tag = this;
-            displayQuoteForm.Show(this);
-            Hide();
+            // Suggestions from meeting with Brother Blazzard:
+            // embed within try-catch for error handling
+            try
+            {
+                CustomerName = addQuoteCustomerInput.Text;
+                // get width depth rush materials methods calculations and return integer, etc. (in DeskQuote.cs)
+                // make sure to int.parse text boxes! so, find names of input fields
+                DeskWidth = int.Parse(addQuoteWidthInput.Text);
+                DeskDepth = int.Parse(addQuoteDepthInput.Text);
+                DrawerCount = int.Parse(addQuoteDrawerCountInput.Text);
+                string MaterialType = AddQuoteMaterialType.Items.ToString();
+                Enum.TryParse(MaterialType, out MaterialTypes);
+                OrderDays = int.Parse(AddQuoteDays.Items.ToString());
+
+                // new object OrderQuote that will take all of the methods within DeskQuote for this order
+                DeskQuote OrderQuote = new DeskQuote(DeskWidth, DeskDepth, DrawerCount, MaterialType, OrderDays);
+
+                // takes new object of DeskQuote and gets the Calculated Total from DeskQuote methods
+                TotalCost = OrderQuote.CalculateTotalCost();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Please verify input field values.");
+                throw;
+            }
+
+            // referenced brother blazzard's github repository
+            var MainMenu = (MainMenu)Tag;
+            DisplayQuote displayQuoteForm = new DisplayQuote(CustomerName, DeskWidth, DeskDepth, DrawerCount, MaterialTypes, OrderDays, TotalCost)
+            {
+                Tag = MainMenu
+            };
+
+            displayQuoteForm.Show();
+            this.Close();
+
         }
 
         private void DepthValidating(object sender, CancelEventArgs e)
         {
-            int depth;
             // validate the depth field
-            if (int.TryParse(addQuoteDepthInput.Text, out depth))
+            if (int.TryParse(addQuoteDepthInput.Text, out var depth))
             {
                 if (depth < Desk.MINDEPTH || depth > Desk.MAXDEPTH)
                 {

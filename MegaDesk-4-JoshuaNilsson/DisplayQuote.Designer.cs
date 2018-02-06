@@ -41,7 +41,7 @@
             this.cancelDisplayQuoteButton = new System.Windows.Forms.Button();
             this.displayQuoteDaysLabel = new System.Windows.Forms.Label();
             this.displayQuoteDays = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.displayQuoteCustomerLabel = new System.Windows.Forms.Label();
             this.displayQuoteCustomer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -164,14 +164,14 @@
             this.displayQuoteDays.Size = new System.Drawing.Size(100, 20);
             this.displayQuoteDays.TabIndex = 5;
             // 
-            // label1
+            // displayQuoteCustomerLabel
             // 
-            this.label1.Font = new System.Drawing.Font("Oswald", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 25);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Customer";
+            this.displayQuoteCustomerLabel.Font = new System.Drawing.Font("Oswald", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.displayQuoteCustomerLabel.Location = new System.Drawing.Point(8, 9);
+            this.displayQuoteCustomerLabel.Name = "displayQuoteCustomerLabel";
+            this.displayQuoteCustomerLabel.Size = new System.Drawing.Size(66, 25);
+            this.displayQuoteCustomerLabel.TabIndex = 8;
+            this.displayQuoteCustomerLabel.Text = "Customer";
             // 
             // displayQuoteCustomer
             // 
@@ -189,7 +189,7 @@
             this.BackColor = System.Drawing.Color.SandyBrown;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.displayQuoteCustomer);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.displayQuoteCustomerLabel);
             this.Controls.Add(this.displayQuoteDays);
             this.Controls.Add(this.displayQuoteDaysLabel);
             this.Controls.Add(this.cancelDisplayQuoteButton);
@@ -224,7 +224,7 @@
         private System.Windows.Forms.Button cancelDisplayQuoteButton;
         private System.Windows.Forms.Label displayQuoteDaysLabel;
         private System.Windows.Forms.Label displayQuoteDays;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label displayQuoteCustomerLabel;
         private System.Windows.Forms.Label displayQuoteCustomer;
     }
 }

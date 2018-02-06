@@ -12,9 +12,17 @@ namespace MegaDesk_3_JoshuaNilsson
 {
     public partial class DisplayQuote : Form
     {
-        public DisplayQuote()
+        public DisplayQuote(string custName, int width, int depth, int drawerCount, string materialsType, int orderDays, int totalCost)
         {
             InitializeComponent();
+
+            // values will be displayed inside respective text boxes
+            displayQuoteCustomer.Text = custName;
+            displayQuoteWidth.Text = width.ToString();
+            displayQuoteDepth.Text = depth.ToString();
+            displayQuoteDrawerCount.Text = drawerCount.ToString();
+            displayQuoteMaterial.Text = materialsType;
+            displayQuoteTotal.Text = totalCost.ToString();
         }
 
         private void cancelDisplayQuoteButton_Click(object sender, EventArgs e)
