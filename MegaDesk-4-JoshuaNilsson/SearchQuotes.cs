@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MegaDesk_4_JoshuaNilsson;
 
 namespace MegaDesk_3_JoshuaNilsson
 {
@@ -16,11 +17,15 @@ namespace MegaDesk_3_JoshuaNilsson
         {
             InitializeComponent();
 
-            searchQuoteMaterial.Items.Add("Laminate");
-            searchQuoteMaterial.Items.Add("Oak");
-            searchQuoteMaterial.Items.Add("Rosewood");
-            searchQuoteMaterial.Items.Add("Veneer");
-            searchQuoteMaterial.Items.Add("Pine");
+            //searchQuoteMaterial.Items.Add("Laminate");
+            //searchQuoteMaterial.Items.Add("Oak");
+            //searchQuoteMaterial.Items.Add("Rosewood");
+            //searchQuoteMaterial.Items.Add("Veneer");
+            //searchQuoteMaterial.Items.Add("Pine");
+
+            List<MaterialTypes> MaterialTypesList = Enum.GetValues(typeof(MaterialTypes))
+                .Cast<MaterialTypes>().ToList();
+            searchQuoteMaterial.DataSource = MaterialTypesList;
         }
 
         private void cancelSearchQuoteButton_Click(object sender, EventArgs e)

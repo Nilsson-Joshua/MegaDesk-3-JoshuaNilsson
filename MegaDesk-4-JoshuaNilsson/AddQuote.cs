@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MegaDesk_4_JoshuaNilsson;
 
 namespace MegaDesk_3_JoshuaNilsson
 {
     public partial class AddQuote : Form
     {
         // initialized for use
-        private string CustomerName = string.Empty;
+        string CustomerName = string.Empty;
         MaterialTypes MaterialTypes;
         int DeskWidth = 0;
         int DeskDepth = 0;
@@ -25,11 +27,11 @@ namespace MegaDesk_3_JoshuaNilsson
         public AddQuote()
         {
             InitializeComponent();
-            AddQuoteMaterialType.Items.Add("Laminate");
-            AddQuoteMaterialType.Items.Add("Oak");
-            AddQuoteMaterialType.Items.Add("Rosewood");
-            AddQuoteMaterialType.Items.Add("Veneer");
-            AddQuoteMaterialType.Items.Add("Pine");
+            //AddQuoteMaterialType.Items.Add("Laminate");
+            //AddQuoteMaterialType.Items.Add("Oak");
+            //AddQuoteMaterialType.Items.Add("Rosewood");
+            //AddQuoteMaterialType.Items.Add("Veneer");
+            //AddQuoteMaterialType.Items.Add("Pine");
 
             AddQuoteDays.Items.Add("3");
             AddQuoteDays.Items.Add("5");
@@ -61,8 +63,10 @@ namespace MegaDesk_3_JoshuaNilsson
                 DeskWidth = int.Parse(addQuoteWidthInput.Text);
                 DeskDepth = int.Parse(addQuoteDepthInput.Text);
                 DrawerCount = int.Parse(addQuoteDrawerCountInput.Text);
+
                 string MaterialType = AddQuoteMaterialType.Items.ToString();
                 Enum.TryParse(MaterialType, out MaterialTypes);
+
                 OrderDays = int.Parse(AddQuoteDays.Items.ToString());
 
                 // new object OrderQuote that will take all of the methods within DeskQuote for this order
@@ -73,13 +77,40 @@ namespace MegaDesk_3_JoshuaNilsson
             }
             catch (Exception ex)
             {
+                // produces error 'Input string was not in a correct format'
                 MessageBox.Show(ex.Message, "Please verify input field values.");
+                throw;
+            }
+
+            // referencing weekly virtual lab recording - this saves a file with variable values
+            try
+            {
+                var DeskRecord = CustomerName + ", " + DeskWidth + ", " + DeskDepth + ", "
+                                 + DrawerCount + ", " + MaterialTypes + ", " + OrderDays + ", " + TotalCost;
+
+                string cFile = @"quotes.txt";
+
+                // if does not exist, create quotes.txt file
+                if (!File.Exists(cFile))
+                {
+                    StreamWriter sw = File.CreateText("quotes.txt");
+                }
+                // write the values to quotes.txt using DeskRecord
+                using (StreamWriter sw = File.AppendText("quotes.txt"))
+                {
+                    sw.WriteLine(DeskRecord);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error with file creation or file text appending");
                 throw;
             }
 
             // referenced brother blazzard's github repository
             var MainMenu = (MainMenu)Tag;
-            DisplayQuote displayQuoteForm = new DisplayQuote(CustomerName, DeskWidth, DeskDepth, DrawerCount, MaterialTypes, OrderDays, TotalCost)
+            DisplayQuote displayQuoteForm = new DisplayQuote(CustomerName, DeskWidth, DeskDepth,
+                DrawerCount, MaterialTypes, OrderDays, TotalCost)
             {
                 Tag = MainMenu
             };

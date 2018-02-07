@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MegaDesk_3_JoshuaNilsson
+namespace MegaDesk_4_JoshuaNilsson
 {
     class Desk
     {

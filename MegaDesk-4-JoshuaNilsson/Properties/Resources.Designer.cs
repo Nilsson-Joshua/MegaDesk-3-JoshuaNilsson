@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MegaDesk_3_JoshuaNilsson.Properties
+namespace MegaDesk_4_JoshuaNilsson.Properties
 {
 
 

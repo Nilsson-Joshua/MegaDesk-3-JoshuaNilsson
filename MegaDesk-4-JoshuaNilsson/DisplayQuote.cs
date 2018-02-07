@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MegaDesk_4_JoshuaNilsson;
 
 namespace MegaDesk_3_JoshuaNilsson
 {
     public partial class DisplayQuote : Form
     {
-        public DisplayQuote(string custName, int width, int depth, int drawerCount, string materialsType, int orderDays, int totalCost)
+        public DisplayQuote(string custName, int width, int depth, int drawerCount, MaterialTypes materialsType, int orderDays, int totalCost)
         {
             InitializeComponent();
 
@@ -21,7 +22,7 @@ namespace MegaDesk_3_JoshuaNilsson
             displayQuoteWidth.Text = width.ToString();
             displayQuoteDepth.Text = depth.ToString();
             displayQuoteDrawerCount.Text = drawerCount.ToString();
-            displayQuoteMaterial.Text = materialsType;
+            displayQuoteMaterial.Text = materialsType.ToString();
             displayQuoteTotal.Text = totalCost.ToString();
         }
 
